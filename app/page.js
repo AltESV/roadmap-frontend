@@ -92,7 +92,7 @@ function generateSessionId() {
                 <p className="mt-1 truncate text-xs leading-5 text-gray-400">{feature.description}</p>
               </div>
             </div>
-            <div className="hidden shrink-0 sm:flex sm:flex-col sm:items-end">
+            <div className="flex flex-col shrink-0 sm:items-end">
               <p className="text-sm leading-6 text-white">{feature.votes} Votes 🙌</p>
               <button 
         className="mt-2 px-4 py-2 text-white bg-green-500 rounded hover:bg-green-600" 
