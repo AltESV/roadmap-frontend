@@ -47,7 +47,7 @@ function getSessionId() {
 }
 
 function generateSessionId() {
-  return 'ss-' + new Date().getTime() + '-' + Math.random().toString(36).substr(2, 9);
+  return 'ss-' + new Date().getTime() + '-' + Math.random().toString(36);
 }
 
 
