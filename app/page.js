@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import useWindowSize from 'react-use/lib/useWindowSize';
 import Confetti from 'react-confetti';
+import Modal from './Modal';
 
 
 export default function Home() {
@@ -11,6 +12,9 @@ export default function Home() {
   const [features, setFeatures] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalDetails, setModalDetails] = useState("");
+
 
   useEffect(() => {
     async function fetchData() {
@@ -91,12 +95,14 @@ function generateSessionId() {
   return (
     <main className="px-4 py-8 bg-gray-900">
       {showConfetti && <Confetti width={width} height={height} />}
+      {isModalOpen && <Modal onClose={() => setIsModalOpen(false)} details={modalDetails} />}
+
       <h1 className="text-2xl font-bold mb-4 text-white">Roadmap</h1>
       <ul role="list" className="divide-y divide-gray-800">
         {features.map((feature) => (
           <li key={feature._id} className="flex justify-between gap-x-6 py-5">
             <div className="flex min-w-0 gap-x-4">
-              <img className="h-12 w-12 flex-none rounded-full bg-gray-800" src={feature.content} alt={feature.title} />
+              <img className="h-12 w-12 flex-none rounded-full bg-gray-800" src={feature.content} alt={feature.title} onClick={() => {setModalDetails(feature.details); setIsModalOpen(true)}} />
               <div className="min-w-0 flex-auto">
                 <h3 className="text-sm font-semibold leading-6 text-white">{feature.title}</h3>
                 <p className="mt-1 truncate text-xs leading-5 text-gray-400">{feature.description}</p>
