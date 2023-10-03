@@ -1,8 +1,13 @@
 'use client'
 
 import React, { useState, useEffect } from 'react';
+import useWindowSize from 'react-use/lib/useWindowSize';
+import Confetti from 'react-confetti';
+
 
 export default function Home() {
+  const { width, height } = useWindowSize()
+  const [showConfetti, setShowConfetti] = useState(false);
   const [features, setFeatures] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -65,6 +70,10 @@ function generateSessionId() {
     .then(response => response.json())
     .then(data => {
         if (data.status === "success") {
+            setShowConfetti(true);
+            setTimeout(() => {
+              setShowConfetti(false)
+            }, 3000);
             setFeatures(prevFeatures => 
                 prevFeatures.map(f => 
                     f._id === featureId ? { ...f, votes: f.votes + 1 } : f
@@ -81,6 +90,7 @@ function generateSessionId() {
 
   return (
     <main className="px-4 py-8 bg-gray-900">
+      {showConfetti && <Confetti width={width} height={height} />}
       <h1 className="text-2xl font-bold mb-4 text-white">Roadmap</h1>
       <ul role="list" className="divide-y divide-gray-800">
         {features.map((feature) => (
