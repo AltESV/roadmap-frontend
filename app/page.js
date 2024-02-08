@@ -97,40 +97,60 @@ function generateSessionId() {
     <main className="px-4 py-8 bg-gray-900">
       {showConfetti && <Confetti width={width} height={height} />}
       {isModalOpen && <Modal onClose={() => setIsModalOpen(false)} details={modalDetails} />}
-
+  
       <div className='flex justify-between'>
-      <h1 className="text-2xl font-bold mb-4 text-white">Roadmap</h1>
-      <a
-    href="mailto:team@myfana.com?subject=Suggestion for a Feature"
-    className="inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
-    <PlusIcon className="-ml-0.5 mr-1.5 h-5 w-5" aria-hidden="true" />
-    Suggest a Feature
-    </a>
+        <h1 className="text-2xl font-bold mb-4 text-white">Roadmap</h1>
+        <a href="mailto:team@myfana.com?subject=Suggestion for a Feature" className="inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+          <PlusIcon className="-ml-0.5 mr-1.5 h-5 w-5" aria-hidden="true" />
+          Suggest a Feature
+        </a>
       </div>
-        
-      <ul role="list" className="divide-y divide-gray-800">
-        {features.map((feature) => (
-          <li key={feature._id} className="flex justify-between gap-x-6 py-5">
-            <div className="flex min-w-0 gap-x-4">
-              <img className="h-12 w-12 flex-none rounded-full bg-gray-800" src={feature.content} alt={feature.title} onClick={() => {setModalDetails(feature.details); setIsModalOpen(true)}} />
-              <div className="min-w-0 flex-auto">
-                <h3 className="text-sm font-semibold leading-6 text-white">{feature.title}</h3>
-                <p className="mt-1 truncate text-xs leading-5 text-gray-400">{feature.description}</p>
+  
+      {/* Pending Features Section */}
+      <section>
+        <h2 className="text-xl font-bold text-white mb-4">Pending Features</h2>
+        <ul role="list" className="divide-y divide-gray-800">
+          {features.filter(feature => feature.status !== "Completed").map((feature) => (
+            <li key={feature._id} className="flex justify-between gap-x-6 py-5">
+              <div className="flex min-w-0 gap-x-4">
+                <img className="h-12 w-12 flex-none rounded-full bg-gray-800" src={feature.content} alt={feature.title} onClick={() => {setModalDetails(feature.details); setIsModalOpen(true)}} />
+                <div className="min-w-0 flex-auto">
+                  <h3 className="text-sm font-semibold leading-6 text-white">{feature.title}</h3>
+                  <p className="mt-1 truncate text-xs leading-5 text-gray-400">{feature.description}</p>
+                </div>
               </div>
-            </div>
-            <div className="flex flex-col shrink-0 sm:items-end">
-              <p className="text-sm leading-6 text-white">{feature.votes} Votes 🙌</p>
-              <button 
-        className="mt-2 px-4 py-2 text-white bg-green-500 rounded hover:bg-green-600" 
-        onClick={() => handleVote(feature._id)}
-    >
-        Vote
-    </button>
-            </div>
-          </li>
-        ))}
-      </ul>
-      
+              <div className="flex flex-col shrink-0 sm:items-end">
+                <p className="text-sm leading-6 text-white">{feature.votes} Votes 🙌</p>
+                <button className="mt-2 px-4 py-2 text-white bg-green-500 rounded hover:bg-green-600" onClick={() => handleVote(feature._id)}>
+                  Vote
+                </button>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </section>
+  
+      {/* Completed Features Section */}
+      <section>
+        <h2 className="text-xl font-bold text-white mt-8 mb-4">Completed Features</h2>
+        <ul role="list" className="divide-y divide-gray-800">
+          {features.filter(feature => feature.status === "Completed").map((feature) => (
+            <li key={feature._id} className="flex justify-between gap-x-6 py-5">
+              <div className="flex min-w-0 gap-x-4">
+                <img className="h-12 w-12 flex-none rounded-full bg-gray-800" src={feature.content} alt={feature.title} onClick={() => {setModalDetails(feature.details); setIsModalOpen(true)}} />
+                <div className="min-w-0 flex-auto">
+                  <h3 className="text-sm font-semibold leading-6 text-white">{feature.title}</h3>
+                  <p className="mt-1 truncate text-xs leading-5 text-gray-400">{feature.description}</p>
+                </div>
+              </div>
+              <div className="flex flex-col shrink-0 sm:items-end">
+                <p className="text-sm leading-6 text-white">{feature.votes} Votes 🙌</p>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </section>
     </main>
   );
+  
 }
